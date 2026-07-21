@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecef;font-family:'Roboto',Helvetica,Arial,sans-serif}
+a{color:#60aae5;text-decoration:none}a:hover{color:#00ace9}
+</style>
+</helmet>
+<div style="padding:48px 56px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <div style="font-size:13px;font-weight:500;letter-spacing:2px;color:#9b9b9b;text-transform:uppercase">HolySpots · Flutter · Раздел 02</div>
+    <div style="font-size:34px;font-weight:300;color:#000">Телефон — карта и офлайн-режим</div>
+    <div style="font-size:15px;color:#575f6a;line-height:1.6">Карта мест, попап места, переключение онлайн/офлайн карты, загрузка офлайн-карт регионов. Область тайлов карты — плейсхолдер: в Figma подставляются реальные тайлы Google Maps / офлайн-рендера.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">1 · Карта</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 1.1 Карта -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.1 · Карта региона (онлайн)</div>
+        <div data-screen-label="1.1 Карта" style="width:375px;height:812px;background:#e8e6e1;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px)"></div>
+          <div style="position:absolute;top:200px;left:-40px;width:500px;height:14px;background:#fff;transform:rotate(-8deg)"></div>
+          <div style="position:absolute;top:420px;left:-40px;width:500px;height:10px;background:#fff;transform:rotate(14deg)"></div>
+          <div style="position:absolute;top:110px;left:210px;width:10px;height:700px;background:#fff;transform:rotate(9deg)"></div>
+          <div style="position:absolute;top:560px;left:-30px;width:250px;height:170px;background:#cfe0f2;border-radius:45% 55% 40% 60%"></div>
+          <div style="position:absolute;top:640px;left:200px;font-family:monospace;font-size:11px;color:#9b9b9b;background:rgba(255,255,255,.7);padding:3px 7px;border-radius:3px">тайлы карты — плейсхолдер</div>
+          <img src="assets/icon_spot.png" style="position:absolute;top:250px;left:80px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:330px;left:250px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:470px;left:150px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:560px;left:280px;height:40px;width:auto">
+          <div style="position:absolute;top:415px;left:186px;width:16px;height:16px;border-radius:50%;background:#4285f4;border:3px solid #fff;box-shadow:0 0 0 8px rgba(66,133,244,.2)"></div>
+          <img src="assets/btn_online_on.png" style="position:absolute;right:10px;top:170px;height:44px;width:auto">
+          <img src="assets/icon_locate.png" style="position:absolute;right:10px;bottom:15px;height:44px;width:auto">
+          <div style="position:absolute;top:0;left:0;right:0">
+            <div style="height:44px;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+              <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+              <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+            </div>
+            <div style="background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+              <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+              <div style="flex:1;font-size:20px;color:#000">Карта</div>
+              <img src="assets/ab_icon_download.png" style="height:22px;width:auto">
+            </div>
+            <div style="height:1px;background:#dddddd"></div>
+            <div style="height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent)"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.2 Карта с попапом -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.2 · Попап места на карте</div>
+        <div data-screen-label="1.2 Карта попап" style="width:375px;height:812px;background:#e8e6e1;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px)"></div>
+          <div style="position:absolute;top:200px;left:-40px;width:500px;height:14px;background:#fff;transform:rotate(-8deg)"></div>
+          <div style="position:absolute;top:420px;left:-40px;width:500px;height:10px;background:#fff;transform:rotate(14deg)"></div>
+          <div style="position:absolute;top:110px;left:210px;width:10px;height:700px;background:#fff;transform:rotate(9deg)"></div>
+          <img src="assets/icon_spot.png" style="position:absolute;top:250px;left:80px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:470px;left:150px;height:48px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:560px;left:280px;height:40px;width:auto">
+          <div style="position:absolute;top:355px;left:38px;width:300px;background:#fff;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;overflow:hidden">
+            <img src="photos/p01.jpg" style="width:85px;height:85px;object-fit:cover;flex:none">
+            <div style="flex:1;padding:10px;display:flex;flex-direction:column;justify-content:space-between">
+              <div style="font-size:14px;color:#000;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">Храм Кришны-Баларамы</div>
+              <div style="font-size:12px;color:#9b9b9b;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">Вриндаван · ОТКРЫТО</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:438px;left:160px;width:14px;height:14px;background:#fff;transform:rotate(45deg);box-shadow:3px 3px 8px rgba(0,0,0,.12)"></div>
+          <img src="assets/btn_online_on.png" style="position:absolute;right:10px;top:170px;height:44px;width:auto">
+          <img src="assets/icon_locate.png" style="position:absolute;right:10px;bottom:15px;height:44px;width:auto">
+          <div style="position:absolute;top:0;left:0;right:0">
+            <div style="height:44px;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+              <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+              <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+            </div>
+            <div style="background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+              <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+              <div style="flex:1;font-size:20px;color:#000">Карта</div>
+              <img src="assets/ab_icon_download.png" style="height:22px;width:auto">
+            </div>
+            <div style="height:1px;background:#dddddd"></div>
+            <div style="height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent)"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.3 Оффлайн-карта -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.3 · Офлайн-режим карты</div>
+        <div data-screen-label="1.3 Карта офлайн" style="width:375px;height:812px;background:#dfdfdf;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#e3e3e3 0 26px,#dcdcdc 26px 52px)"></div>
+          <div style="position:absolute;top:250px;left:-40px;width:500px;height:12px;background:#f2f2f2;transform:rotate(-6deg)"></div>
+          <div style="position:absolute;top:480px;left:120px;width:10px;height:500px;background:#f2f2f2;transform:rotate(20deg)"></div>
+          <div style="position:absolute;top:600px;left:180px;font-family:monospace;font-size:11px;color:#9b9b9b;background:rgba(255,255,255,.7);padding:3px 7px;border-radius:3px">офлайн-тайлы — плейсхолдер</div>
+          <img src="assets/icon_spot.png" style="position:absolute;top:300px;left:120px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:400px;left:240px;height:40px;width:auto">
+          <img src="assets/btn_online_off.png" style="position:absolute;right:10px;top:170px;height:44px;width:auto">
+          <img src="assets/icon_locate.png" style="position:absolute;right:10px;bottom:15px;height:44px;width:auto">
+          <div style="position:absolute;top:0;left:0;right:0">
+            <div style="height:44px;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+              <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+              <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+            </div>
+            <div style="background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+              <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+              <div style="flex:1;font-size:20px;color:#000">Карта</div>
+              <img src="assets/ab_icon_download.png" style="height:22px;width:auto">
+            </div>
+            <div style="height:1px;background:#dddddd"></div>
+            <div style="height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent)"></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:80px;display:flex;justify-content:center"><div style="background:rgba(0,0,0,.75);color:#fff;font-size:16px;height:30px;line-height:30px;padding:0 20px;border-radius:15px">Переключение карт</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">2 · Офлайн-карты</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 2.1 Список офлайн карт -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.1 · Офлайн-карты — список регионов</div>
+        <div data-screen-label="2.1 Офлайн-карты" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Оффлайн карты</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center"><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Вриндаван</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#9b9b9b;letter-spacing:.5px">СКАЧАНО</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;align-items:center"><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Навадвип</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#60aae5;letter-spacing:.5px">СКАЧАТЬ</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;align-items:center;position:relative;background:#fbfbfb"><div style="position:absolute;left:0;top:0;bottom:0;width:45%;background:rgba(96,170,229,.12)"></div><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px;position:relative"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Джаганнатха Пури</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#9b9b9b;letter-spacing:.5px;position:relative">45%</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;align-items:center"><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Говардхан</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#60aae5;letter-spacing:.5px">СКАЧАТЬ</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;align-items:center"><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Экачакра</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#60aae5;letter-spacing:.5px">СКАЧАТЬ</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;align-items:center"><div style="flex:1;display:flex;align-items:center;gap:20px;padding:20px"><img src="assets/icon_pin_grey_2.png" style="height:22px;width:auto"><span style="font-size:16px;color:#000">Ангкор Ват</span></div><div style="padding:20px;font-size:12px;font-weight:500;color:#60aae5;letter-spacing:.5px">ОБНОВИТЬ</div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 2.2 Пусто -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.2 · Офлайн-карты — пустое состояние</div>
+        <div data-screen-label="2.2 Офлайн-карты пусто" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Оффлайн карты</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
+            <img src="assets/offline_maps_empty.png" style="height:64px;width:auto;opacity:.8">
+            <div style="font-size:16px;color:#9b9b9b;text-align:center;padding:0 40px">Нет информации для отображения</div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 2.3 Диалог скачивания -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.3 · Диалог «Скачать карту?»</div>
+        <div data-screen-label="2.3 Диалог скачивания карты" style="width:375px;height:812px;background:#e8e6e1;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px)"></div>
+          <div style="position:absolute;top:200px;left:-40px;width:500px;height:14px;background:#fff;transform:rotate(-8deg)"></div>
+          <img src="assets/icon_spot.png" style="position:absolute;top:300px;left:120px;height:40px;width:auto">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.45)"></div>
+          <div style="position:absolute;left:32px;right:32px;top:50%;transform:translateY(-50%);background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+            <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Хотите скачать карту для использования без интернета?</div>
+            <div style="display:flex;border-top:1px solid #f4f4f4">
+              <div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#9b9b9b;letter-spacing:.5px">ОТМЕНА</div>
+              <div style="width:1px;background:#f4f4f4"></div>
+              <div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">СКАЧАТЬ</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 21px;box-sizing:border-box">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#fff;border-radius:1px"></div><div style="width:3px;height:6px;background:#fff;border-radius:1px"></div><div style="width:3px;height:8px;background:#fff;border-radius:1px"></div><div style="width:3px;height:10px;background:#fff;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(255,255,255,.5);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#fff;border-radius:1.5px"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.4 Загрузка идёт (тост) -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.4 · Карта загружается (уведомление)</div>
+        <div data-screen-label="2.4 Карта загружается" style="width:375px;height:812px;background:#e8e6e1;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px)"></div>
+          <div style="position:absolute;top:200px;left:-40px;width:500px;height:14px;background:#fff;transform:rotate(-8deg)"></div>
+          <div style="position:absolute;top:420px;left:-40px;width:500px;height:10px;background:#fff;transform:rotate(14deg)"></div>
+          <img src="assets/icon_spot.png" style="position:absolute;top:300px;left:120px;height:40px;width:auto">
+          <img src="assets/icon_spot.png" style="position:absolute;top:450px;left:250px;height:40px;width:auto">
+          <img src="assets/btn_online_on.png" style="position:absolute;right:10px;top:170px;height:44px;width:auto">
+          <img src="assets/icon_locate.png" style="position:absolute;right:10px;bottom:15px;height:44px;width:auto">
+          <div style="position:absolute;top:0;left:0;right:0">
+            <div style="height:44px;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+              <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+              <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+            </div>
+            <div style="background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+              <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+              <div style="flex:1;font-size:20px;color:#000">Карта</div>
+              <img src="assets/ab_icon_download.png" style="height:22px;width:auto">
+            </div>
+            <div style="height:1px;background:#dddddd"></div>
+            <div style="height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent)"></div>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:80px;display:flex;justify-content:center"><div style="background:rgba(0,0,0,.75);color:#fff;font-size:16px;height:30px;line-height:30px;padding:0 20px;border-radius:15px">Карта загружается.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:24px;font-size:14px;color:#575f6a">
+    <a href="01 Телефон - Основное.dc.html">← 01 Основное</a>
+    <a href="03 Телефон - Отзывы и сервисы.dc.html">Далее: 03 Отзывы и сервисы →</a>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

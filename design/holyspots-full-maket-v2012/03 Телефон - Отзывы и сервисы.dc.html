@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecef;font-family:'Roboto',Helvetica,Arial,sans-serif}
+a{color:#60aae5;text-decoration:none}a:hover{color:#00ace9}
+</style>
+</helmet>
+<div style="padding:48px 56px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <div style="font-size:13px;font-weight:500;letter-spacing:2px;color:#9b9b9b;text-transform:uppercase">HolySpots · Flutter · Раздел 03</div>
+    <div style="font-size:34px;font-weight:300;color:#000">Телефон — отзывы, гиды и сервисы</div>
+    <div style="font-size:15px;color:#575f6a;line-height:1.6">Отзывы и их создание, маршруты гидов, заявка «Найти гида», отели, еда, «Как добраться», пожертвования, ошибки и пустые состояния.</div>
+  </div>
+
+  <!-- ══════ 1. Отзывы ══════ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">1 · Отзывы</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 1.1 Список отзывов -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.1 · Отзывы места</div>
+        <div data-screen-label="1.1 Отзывы" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Отзывы</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <div style="padding:15px 0;border-bottom:1px solid #f4f4f4">
+                <div style="display:flex;gap:15px;padding:0 15px">
+                  <img src="assets/smile.png" style="height:24px;width:auto;flex:none;filter:grayscale(1);opacity:.55">
+                  <div style="flex:1">
+                    <div style="font-size:12px;color:#9b9b9b;padding-top:4px">Анна в Храм Кришны-Баларамы</div>
+                    <div style="font-size:14px;font-weight:300;font-style:italic;color:#4a4a4a;margin-top:5px;line-height:1.4">"Удивительное по силе место. Обязательно приходите на утреннее арати."</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px;padding:10px 15px 0 54px"><img src="photos/p02.jpg" style="width:72px;height:72px;object-fit:cover"><img src="photos/p03.jpg" style="width:72px;height:72px;object-fit:cover"><img src="photos/p05.jpg" style="width:72px;height:72px;object-fit:cover"></div>
+              </div>
+              <div style="padding:15px 0;border-bottom:1px solid #f4f4f4">
+                <div style="display:flex;gap:15px;padding:0 15px">
+                  <img src="assets/smile.png" style="height:24px;width:auto;flex:none;filter:grayscale(1);opacity:.55">
+                  <div style="flex:1">
+                    <div style="font-size:12px;color:#9b9b9b;padding-top:4px">Дмитрий в Храм Кришны-Баларамы</div>
+                    <div style="font-size:14px;font-weight:300;font-style:italic;color:#4a4a4a;margin-top:5px;line-height:1.4">"Один из высочайших стандартов чистоты и поклонения. Очень доброжелательные люди."</div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:15px 0;border-bottom:1px solid #f4f4f4">
+                <div style="display:flex;gap:15px;padding:0 15px">
+                  <img src="assets/smile_normal.png" style="height:24px;width:auto;flex:none;filter:grayscale(1);opacity:.55">
+                  <div style="flex:1">
+                    <div style="font-size:12px;color:#9b9b9b;padding-top:4px">Elena в Храм Кришны-Баларамы</div>
+                    <div style="font-size:14px;font-weight:300;font-style:italic;color:#4a4a4a;margin-top:5px;line-height:1.4">"Очень много народу в праздничные дни, приходите пораньше."</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px;padding:10px 15px 0 54px"><img src="photos/p06.jpg" style="width:72px;height:72px;object-fit:cover"></div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 1.2 Новый отзыв -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.2 · Новый отзыв</div>
+        <div data-screen-label="1.2 Новый отзыв" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Новый отзыв</div>
+            <div style="font-size:15px;font-weight:500;color:#60aae5">Отправить</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;flex-direction:column">
+            <div style="flex:none;display:flex;justify-content:center;gap:10px;padding:25px 0">
+              <div style="width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center"><img src="assets/smile_sad.png" style="height:28px;width:auto;filter:grayscale(1);opacity:.5"></div>
+              <div style="width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center"><img src="assets/smile_normal.png" style="height:28px;width:auto;filter:grayscale(1);opacity:.5"></div>
+              <div style="width:60px;height:60px;border-radius:50%;background:rgba(96,170,229,.15);display:flex;align-items:center;justify-content:center"><img src="assets/smile.png" style="height:28px;width:auto"></div>
+            </div>
+            <div style="flex:none;height:1px;background:#f4f4f4"></div>
+            <div style="flex:none;padding:20px 15px;display:flex;gap:2px"><span style="font-size:20px;color:#000">Удивительное по силе место</span><span style="display:inline-block;width:2px;height:24px;background:#60aae5"></span></div>
+            <div style="flex:1"></div>
+            <div style="flex:none;background:#f5f5f5;padding-bottom:10px">
+              <div style="padding:20px 15px 10px;font-size:12px;color:#c6c6c6">Добавить фотографии:</div>
+              <div style="display:flex;gap:8px;padding:0 15px">
+                <img src="photos/p02.jpg" style="width:72px;height:72px;object-fit:cover">
+                <div style="width:72px;height:72px;background:#fff;border:1px dashed #c6c6c6;display:flex;align-items:center;justify-content:center;box-sizing:border-box"><img src="assets/icon_picture_add.png" style="height:24px;width:auto;opacity:.6"></div>
+              </div>
+            </div>
+            <div style="flex:none;background:#ececec;display:grid;grid-template-columns:repeat(10,1fr);gap:5px;padding:8px 5px 24px">
+              <div style="grid-column:1/11;display:flex;justify-content:center;gap:5px"><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">й</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ц</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">у</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">к</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">е</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">н</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">г</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ш</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">щ</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">з</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">х</div></div>
+              <div style="grid-column:1/11;display:flex;justify-content:center;gap:5px"><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ф</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ы</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">в</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">а</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">п</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">р</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">о</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">л</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">д</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ж</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">э</div></div>
+              <div style="grid-column:1/11;display:flex;justify-content:center;gap:5px"><div style="width:40px;height:38px;background:#cdd3da;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:#000">⇧</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">я</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ч</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">с</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">м</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">и</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">т</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ь</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">б</div><div style="width:26px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:16px;color:#000">ю</div><div style="width:40px;height:38px;background:#cdd3da;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:#000">⌫</div></div>
+              <div style="grid-column:1/11;display:flex;justify-content:center;gap:5px"><div style="width:88px;height:38px;background:#cdd3da;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:#000">123</div><div style="width:150px;height:38px;background:#fff;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:#9b9b9b">пробел</div><div style="width:88px;height:38px;background:#cdd3da;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:13px;color:#000">ввод</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.3 Пустые отзывы -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.3 · Отзывы — пустое состояние</div>
+        <div data-screen-label="1.3 Отзывы пусто" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Отзывы</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
+            <img src="assets/icon_message_empty.png" style="height:64px;width:auto;opacity:.8">
+            <div style="font-size:16px;color:#9b9b9b;text-align:center;padding:0 40px">Нет информации для отображения</div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ 2. Гиды ══════ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">2 · Гиды и заявка</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 2.1 Маршрут гида -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.1 · Гид «Сокровище Махабхараты»</div>
+        <div data-screen-label="2.1 Гид маршрут" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Сокровище Махабхараты</div>
+            <img src="assets/ab_icon_map.png" style="height:22px;width:auto">
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <img src="photos/p05.jpg" style="width:100%;height:180px;object-fit:cover;flex:none">
+              <div style="padding:20px 15px;font-size:16px;font-weight:300;color:#000;line-height:1.5;border-bottom:0.5px solid #e0e0e0">Когда-то Великая целостная Веда была разделена на 4 части, потому что люди начали деградировать и не могли понять — в чём смысл жизни. Затем мудрец Веда Вьяса разъяснил суть Ведического знания в совершенной Бхагават Пуране…</div>
+              <div style="display:flex;background:#fff">
+                <img src="photos/p02.jpg" style="width:120px;height:120px;object-fit:cover;flex:none">
+                <div style="flex:1;position:relative;padding:15px 15px 10px">
+                  <div style="display:flex;gap:10px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Храм Кришны-Баларамы</div><div style="font-size:12px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div>
+                  <div style="position:absolute;left:15px;right:15px;bottom:10px;font-size:12px;color:#9b9b9b;line-height:1.3">Вриндаван</div>
+                </div>
+              </div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;background:#fff">
+                <img src="photos/p04.jpg" style="width:120px;height:120px;object-fit:cover;flex:none">
+                <div style="flex:1;position:relative;padding:15px 15px 10px">
+                  <div style="display:flex;gap:10px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Храм Господа Джаганнатха</div><div style="font-size:12px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div>
+                  <div style="position:absolute;left:15px;right:15px;bottom:10px;font-size:12px;color:#9b9b9b;line-height:1.3">Джаганнатха Пури</div>
+                </div>
+              </div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;background:#fff">
+                <img src="photos/p07.jpg" style="width:120px;height:120px;object-fit:cover;flex:none">
+                <div style="flex:1;position:relative;padding:15px 15px 10px">
+                  <div style="display:flex;gap:10px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Холм Говардхан</div><div style="font-size:12px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div>
+                  <div style="position:absolute;left:15px;right:15px;bottom:10px;font-size:12px;color:#9b9b9b;line-height:1.3">Говардхан</div>
+                </div>
+              </div>
+              <div style="height:0.5px;background:#e0e0e0"></div>
+              <div style="padding:20px"><div style="height:40px;border:1px solid #60aae5;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#00ace9">Найти гида</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 2.2 Найти гида -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.2 · Заявка «Найти гида»</div>
+        <div data-screen-label="2.2 Найти гида" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Найти гида</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+            <img src="photos/p05.jpg" style="width:100%;height:180px;object-fit:cover;flex:none">
+            <div style="padding:20px 15px 0;font-size:16px;color:#000;line-height:1.5">Если Вы ищете себе компанию, чтобы пройти по этим местам с квалифицированным гидом, отправьте заявку.</div>
+            <div style="padding:20px 15px 5px;font-size:16px;color:#000">Мария Соколова</div>
+            <div style="margin:0 15px;height:1px;background:#f4f4f4"></div>
+            <div style="padding:20px 15px 5px;font-size:16px;color:#d9d9d9">Ваш email</div>
+            <div style="margin:0 15px;height:1px;background:#f4f4f4"></div>
+            <div style="padding:20px 15px 5px;font-size:16px;color:#d9d9d9">Текст сообщения</div>
+            <div style="flex:1"></div>
+            <div style="flex:none;height:50px;background:#60aae5;display:flex;align-items:center;justify-content:center;margin-top:20px">
+              <span style="font-size:16px;font-weight:500;color:#fff">Отправить заявку</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 Заявка отправлена -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.3 · Успех / ошибки валидации</div>
+        <div data-screen-label="2.3 Диалоги заявки" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+            <div style="height:100px;background:#f5f5f5"></div>
+            <img src="photos/p05.jpg" style="width:100%;height:180px;object-fit:cover">
+            <div style="flex:1;background:#fff"></div>
+            <div style="height:50px;background:#60aae5"></div>
+          </div>
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.45)"></div>
+          <div style="position:absolute;left:32px;right:32px;top:34%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+            <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Ваше сообщение успешно отправлено</div>
+            <div style="display:flex;border-top:1px solid #f4f4f4">
+              <div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">OK</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:32px;right:32px;top:56%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+            <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Все поля обязательны для заполнения.</div>
+            <div style="display:flex;border-top:1px solid #f4f4f4">
+              <div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">OK</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:32px;right:32px;top:76%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.3)">
+            <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Введите корректный Email.</div>
+            <div style="display:flex;border-top:1px solid #f4f4f4">
+              <div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">OK</div>
+            </div>
+          </div>
+          <div style="position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 21px;box-sizing:border-box">
+            <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#fff;border-radius:1px"></div><div style="width:3px;height:6px;background:#fff;border-radius:1px"></div><div style="width:3px;height:8px;background:#fff;border-radius:1px"></div><div style="width:3px;height:10px;background:#fff;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(255,255,255,.5);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#fff;border-radius:1.5px"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ 3. Отели, еда, как добраться ══════ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">3 · Отели, еда, как добраться</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 3.1 Где остановиться -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.1 · «Где остановиться» (отели)</div>
+        <div data-screen-label="3.1 Отели" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Где остановиться</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;height:100px"><img src="photos/p10.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">МВТ Гестхаус и Ресторан</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Приятное и довольно роскошное место при ISKCON</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p11.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Бхакти Дхама</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">4-звёздочный отель, средний чек 1000–1500 рупий</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p12.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Кришна Интернешнл</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">В 3 км от ж/д вокзала Вриндавана</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p14.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Дивайн Колинг Апартмент</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Апартаменты недалеко от центра</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p15.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Хотел Басера Вриндаван</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Гостиница в пешей доступности от храмов</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 3.2 Где поесть -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.2 · «Где поесть»</div>
+        <div data-screen-label="3.2 Еда" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Где поесть</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;height:100px"><img src="photos/p17.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Кешав Кофе Хаус</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Уютное кафе с национальной индийской кухней</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p18.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Рам Свитс</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Лучшие традиционные восточные сладости</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p19.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Шри Говинда</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Одно из лучших мест рядом с точками паломничества</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p20.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Франки Чайниз Хат</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Уличное кафе с разнообразной кухней</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;height:100px"><img src="photos/p21.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;display:flex;flex-direction:column;padding:15px 10px 10px 15px"><div style="font-size:15px;color:#000">Сладости Браджабаси</div><div style="flex:1"></div><div style="font-size:12px;color:#9b9b9b">Пожалуй, самое популярное среди туристов заведение</div></div></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 3.3 Как добраться -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.3 · «Как добраться»</div>
+        <div data-screen-label="3.3 Как добраться" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Как добраться</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;overflow:hidden;position:relative">
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(rgba(0,0,0,.10),transparent);z-index:2"></div>
+            <div style="display:flex;flex-direction:column">
+              <div style="display:flex;gap:15px;padding:20px 20px 15px">
+                <img src="assets/train.png" style="height:26px;width:auto;flex:none;margin-top:3px">
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:500;color:#4a4a4a">Поездом из Дели</div>
+                  <div style="font-size:14px;font-weight:300;color:#4a4a4a;margin-top:5px;line-height:1.5">Самый простой и безопасный способ — поезд с железнодорожной станции Нью-Дели до Матхуры, далее авто-рикша до Вриндавана. Скоростной «Аэропорт Дели Экспресс метро» соединяет третий терминал аэропорта с городом.</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:15px;padding:5px 20px 15px">
+                <img src="assets/train.png" style="height:26px;width:auto;flex:none;margin-top:3px">
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:500;color:#4a4a4a">Такси</div>
+                  <div style="font-size:14px;font-weight:300;color:#4a4a4a;margin-top:5px;line-height:1.5">Такси из аэропорта Дели до Вриндавана занимает 3–4 часа в зависимости от трафика. Договаривайтесь о цене заранее или пользуйтесь официальными стойками prepaid taxi.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ 4. Пожертвования и ошибки ══════ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">4 · Пожертвования, ошибки соединения</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 4.1 Донат диалог -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.1 · Баннер пожертвования</div>
+        <div data-screen-label="4.1 Донат баннер" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+            <div style="height:100px;background:#f5f5f5"></div>
+            <img src="photos/p01.jpg" style="width:100%;height:180px;object-fit:cover">
+            <img src="photos/p04.jpg" style="width:100%;height:180px;object-fit:cover">
+            <div style="flex:1;background:#fff"></div>
+          </div>
+          <div style="position:absolute;left:10px;right:10px;bottom:10px;background:#fff;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:10px 10px 30px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <img src="assets/paypal_logo.png" style="height:26px;width:auto">
+              <img src="assets/icon_close_donate.png" style="height:16px;width:auto;padding:5px">
+            </div>
+            <div style="text-align:center;font-size:16px;color:#000;margin-top:2px">поддержите вкладом 1$ или больше ;)</div>
+          </div>
+          <div style="position:absolute;top:0;left:0;right:0">
+            <div style="height:44px;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+              <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+              <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+            </div>
+            <div style="background:#f5f5f5;display:flex;align-items:center;gap:18px;height:56px;padding:0 16px">
+              <div style="flex:1;font-size:20px;color:#000">Holy Spots</div>
+              <img src="assets/ab_icon_search.png" style="height:22px;width:auto">
+              <img src="assets/ab_icon_map.png" style="height:22px;width:auto">
+            </div>
+            <div style="height:1px;background:#dddddd"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.2 Донат экран -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.2 · Экран «Сделать пожертвование»</div>
+        <div data-screen-label="4.2 Донат" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Сделать пожертвование</div>
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;flex-direction:column">
+            <div style="padding:20px 15px 0;font-size:16px;color:#000">Вы будете перенаправлены на сайт PayPal.</div>
+            <div style="display:flex;justify-content:center;padding:20px 0"><img src="assets/donate.png" style="height:48px;width:auto"></div>
+            <div style="height:1px;background:#f4f4f4;margin:0 0 20px"></div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 4.3 Ошибка соединения -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.3 · Ошибки соединения и синхронизации</div>
+        <div data-screen-label="4.3 Ошибки" style="width:375px;height:812px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:44px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:15px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:18px;height:56px;padding:0 16px">
+            <div style="flex:1;font-size:20px;color:#000">Holy Spots</div>
+            <img src="assets/ab_icon_search.png" style="height:22px;width:auto">
+            <img src="assets/ab_icon_map.png" style="height:22px;width:auto">
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:none;background:#fe443a;display:flex;align-items:center;justify-content:center;height:30px"><span style="font-size:16px;color:#fff">Нет соединения с сервером</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:0 30px">
+            <div style="width:100%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.18)">
+              <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Ошибка синхронизации</div>
+              <div style="display:flex;border-top:1px solid #f4f4f4"><div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">OK</div></div>
+            </div>
+            <div style="width:100%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.18)">
+              <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Соединение с сервером не может быть установлено. Пожалуйста, проверьте настройки интернет-соединения или повторите попытку чуть позже.</div>
+              <div style="display:flex;border-top:1px solid #f4f4f4"><div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">OK</div></div>
+            </div>
+            <div style="width:100%;background:#fff;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,.18)">
+              <div style="padding:25px 20px;font-size:16px;color:#000;line-height:1.5;text-align:center">Хотите включить Bluetooth для поиска ближайших мест вокруг Вас?</div>
+              <div style="display:flex;border-top:1px solid #f4f4f4"><div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#9b9b9b;letter-spacing:.5px">НЕТ</div><div style="width:1px;background:#f4f4f4"></div><div style="flex:1;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:#60aae5;letter-spacing:.5px">ДА</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:24px;font-size:14px;color:#575f6a">
+    <a href="02 Телефон - Карта и офлайн.dc.html">← 02 Карта и офлайн</a>
+    <a href="04 Планшет.dc.html">Далее: 04 Планшет →</a>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

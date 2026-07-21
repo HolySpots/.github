@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecef;font-family:'Roboto',Helvetica,Arial,sans-serif}
+a{color:#60aae5;text-decoration:none}a:hover{color:#00ace9}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column">
+  <div style="padding:56px 56px 0;display:flex;flex-direction:column;gap:14px;max-width:1100px">
+    <div style="display:flex;align-items:center;gap:16px">
+      <img src="assets/holyspots_app_icon.png" style="width:56px;height:56px;border-radius:12px">
+      <div>
+        <div style="font-size:38px;font-weight:300;color:#000">HolySpots — кроссплатформенный макет</div>
+        <div style="font-size:14px;color:#9b9b9b;margin-top:4px">Flutter · единый интерфейс iOS / Android / iPad / Android tablet / Windows · восстановлен из 4 кодовых баз (Java, Swift, C#, ASP)</div>
+      </div>
+    </div>
+    <div style="font-size:15px;color:#575f6a;line-height:1.6;max-width:900px">Общий canvas со всеми разделами. Каждый раздел также доступен отдельным файлом: <a href="01 Телефон - Основное.dc.html">01 Основное</a> · <a href="02 Телефон - Карта и офлайн.dc.html">02 Карта и офлайн</a> · <a href="03 Телефон - Отзывы и сервисы.dc.html">03 Отзывы и сервисы</a> · <a href="04 Планшет.dc.html">04 Планшет</a> · <a href="05 Windows Desktop.dc.html">05 Windows</a> · <a href="06 Админка.dc.html">06 Админка</a></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:#575f6a">
+      <span style="font-weight:500;color:#9b9b9b">Палитра из исходников:</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:16px;height:16px;background:#60aae5;border-radius:4px;display:inline-block"></span>#60aae5</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:16px;height:16px;background:#00ace9;border-radius:4px;display:inline-block"></span>#00ace9</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:16px;height:16px;background:#f5f5f5;border-radius:4px;display:inline-block;border:1px solid #ddd"></span>#f5f5f5</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:16px;height:16px;background:#9b9b9b;border-radius:4px;display:inline-block"></span>#9b9b9b</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:16px;height:16px;background:#fe443a;border-radius:4px;display:inline-block"></span>#fe443a</span>
+      <span style="margin-left:10px;font-weight:500;color:#9b9b9b">Шрифт:</span> Roboto 300/400/500
+    </div>
+  </div>
+  <dc-import name="01 Телефон - Основное" hint-size="100%,3000px"></dc-import>
+  <dc-import name="02 Телефон - Карта и офлайн" hint-size="100%,2100px"></dc-import>
+  <dc-import name="03 Телефон - Отзывы и сервисы" hint-size="100%,3000px"></dc-import>
+  <dc-import name="04 Планшет" hint-size="100%,2200px"></dc-import>
+  <dc-import name="05 Windows Desktop" hint-size="100%,2200px"></dc-import>
+  <dc-import name="06 Админка" hint-size="100%,2200px"></dc-import>
+</div>
+</x-dc>
+</body>
+</html>

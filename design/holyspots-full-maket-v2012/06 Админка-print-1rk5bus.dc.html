@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecef;font-family:'Roboto',Helvetica,Arial,sans-serif}
+a{color:#00ace8;text-decoration:none}a:hover{color:#60aae5}
+</style>
+</helmet>
+<div style="padding:48px 56px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <div style="font-size:13px;font-weight:500;letter-spacing:2px;color:#9b9b9b;text-transform:uppercase">HolySpots · Flutter · Раздел 06</div>
+    <div style="font-size:34px;font-weight:300;color:#000">Администрирование</div>
+    <div style="font-size:15px;color:#575f6a;line-height:1.6">Режим администратора внутри приложения (не зависит от платформы; показан на десктопной раскладке 1440×900). Структура и палитра перенесены из существующей веб-админки: разделы Spots, Regions, Guides, Maps, Reviews, Places, Directions — все с полным CRUD (списки, drag-сортировка, формы редактирования с двуязычными полями RU/EN); меню #dce8ec, акцент #00ace8.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">1 · Вход и список мест</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 1.1 Login -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.1 · Вход администратора</div>
+        <div data-screen-label="1.1 Админ вход" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%">
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center">
+            <div style="width:380px;display:flex;flex-direction:column;gap:18px">
+              <img src="assets/holyspots_app_icon.png" style="width:72px;height:72px;border-radius:16px;align-self:center">
+              <div style="text-align:center;font-size:22px;color:#575f6a;margin-bottom:10px">Holy Spots — Вход</div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;color:#575f6a">Login</span><div style="height:46px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 14px;font-size:16px;color:#575f6a">admin</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;color:#575f6a">Password</span><div style="height:46px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 14px;font-size:16px;color:#575f6a;letter-spacing:3px">••••••••</div></div>
+              <div style="height:50px;background:#47bfed;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;margin-top:8px">Log in</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.2 Spots list -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.2 · Spots — список мест с фильтром по региону</div>
+        <div data-screen-label="1.2 Админ Spots" style="width:1440px;height:900px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%">
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div>
+            </div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:16px">
+              <div style="height:44px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px"><span style="font-size:20px;line-height:1">+</span> Add spot</div>
+              <div style="height:44px;min-width:250px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:16px;color:#00ace8;box-sizing:border-box">Вриндаван <span style="font-size:11px">▼</span></div>
+              <div style="height:44px;width:70px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">OK</div>
+            </div>
+            <div style="height:2px;background:#dce8ec"></div>
+            <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;border-top:1px solid #dce8ec">
+              <div style="display:grid;grid-template-columns:120px 1fr 220px 200px 220px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p02.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Храм Кришны-Баларамы</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Пн–Вс</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">4:30–13:00, 16:00–20:45</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 220px 200px 220px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p03.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Самадхи Шрилы Прабхупады</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Пн–Вс</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Around the clock</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 220px 200px 220px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p06.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Исследовательский институт и библиотека Вриндавана</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Пн–Сб</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">10:00–17:00</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 220px 200px 220px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p09.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вараха-гхата</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Пн–Вс</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Around the clock</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 220px 200px 220px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p13.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Тропа мальчиков-пастушков</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Пн–Вс</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">6:00–19:00</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">2 · Редактирование места и модерация отзывов</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 2.1 Spot edit -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.1 · Spot — редактирование</div>
+        <div data-screen-label="2.1 Админ Spot Edit" style="width:1440px;height:900px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%">
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div>
+            </div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px">
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:18px 20px;display:flex;flex-direction:column;gap:0">
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Main photo (315×315)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:16px"><img src="photos/p02.jpg" style="width:100px;height:100px;object-fit:cover"><span style="font-size:15px;color:#9b9b9b">Заменить файл…</span></div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Name (RU / EN)</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif">Храм Кришны-Баларамы</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif">Krishna Balarama Mandir</div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Opening times</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <div style="display:flex;gap:8px"><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Пн</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Вт</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Ср</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Чт</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Пт</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Сб</div><div style="padding:6px 10px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Вс</div></div>
+                  <div style="font-family:serif">4:30–13:00, 16:00–20:45</div>
+                  <div style="height:36px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 14px;font-size:14px">+ Add</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Photos (1242×870)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:10px"><img src="photos/p01.jpg" style="width:100px;height:100px;object-fit:cover"><img src="photos/p03.jpg" style="width:100px;height:100px;object-fit:cover"><img src="photos/p05.jpg" style="width:100px;height:100px;object-fit:cover"><div style="height:36px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 14px;font-size:14px">+ Add</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Description</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif;line-height:1.5;font-size:15px">Этот великолепный храм был сооружён в 1975 году Его Божественной Милостью А. Ч. Бхактиведантой Свами Прабхупадой, ачарией-основателем ИСККОН…</div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr 260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Latitude</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif">27.5735</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">Longitude</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif">77.6899</div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Map</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec">
+                  <div style="position:relative;height:150px;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px);overflow:hidden"><div style="position:absolute;top:70px;left:-20px;width:700px;height:8px;background:#fff;transform:rotate(-4deg)"></div><img src="assets/icon_spot.png" style="position:absolute;top:48px;left:300px;height:36px;width:auto"><div style="position:absolute;bottom:8px;left:8px;font-family:monospace;font-size:11px;color:#9b9b9b;background:rgba(255,255,255,.7);padding:2px 6px;border-radius:3px">карта — плейсхолдер</div></div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:260px 1fr 260px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Beacon Id</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;font-family:serif">f7826da6-4fa2-4e98-8024-bc5b71e0893e</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">Regions</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;gap:8px"><div style="padding:6px 12px;border-radius:6px;background:#47bfed;color:#fff;font-size:14px">Вриндаван</div><div style="height:32px;min-width:160px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:14px;color:#00ace8;box-sizing:border-box">Добавить… <span style="font-size:10px">▼</span></div></div>
+              </div>
+            </div>
+            <div style="flex:none;display:flex;gap:14px;padding:14px 0 0">
+              <div style="height:50px;width:184px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Save</div>
+              <div style="height:50px;width:184px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Cancel</div>
+              <div style="flex:1"></div>
+              <div style="height:50px;width:184px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;box-sizing:border-box">Delete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 Reviews -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">2.2 · Reviews — модерация отзывов</div>
+        <div data-screen-label="2.2 Админ Reviews" style="width:1440px;height:900px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%">
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div>
+              <div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div>
+            </div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;gap:14px;font-size:16px;color:#575f6a">
+              <div style="height:44px;min-width:220px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#00ace8;box-sizing:border-box">Не одобренные <span style="font-size:11px">▼</span></div>
+              <span>From</span><div style="height:39px;min-width:160px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;color:#00ace8;box-sizing:border-box">01.06.2026</div>
+              <span>To</span><div style="height:39px;min-width:160px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;color:#00ace8;box-sizing:border-box">14.07.2026</div>
+              <div style="height:44px;width:70px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center">OK</div>
+            </div>
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:280px 150px 120px 1fr 220px;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Храм Кришны-Баларамы</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">12.07.2026</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center"><img src="assets/smile.png" style="height:22px;width:auto"></div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;line-height:1.5">Удивительное по силе место. Обязательно приходите на утреннее арати.<div style="display:flex;gap:8px;margin-top:10px"><img src="photos/p02.jpg" style="width:80px;height:80px;object-fit:cover"><img src="photos/p03.jpg" style="width:80px;height:80px;object-fit:cover"></div></div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:10px"><div style="height:40px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✓ Approve</div><div style="height:40px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✕ Delete</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:280px 150px 120px 1fr 220px;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Холм Говардхан</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">10.07.2026</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center"><img src="assets/smile_normal.png" style="height:22px;width:auto"></div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;line-height:1.5">Парикрама 21 км — берите воду и выходите рано утром.</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:10px"><div style="height:40px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✓ Approve</div><div style="height:40px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✕ Delete</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:280px 150px 120px 1fr 220px;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Храм Господа Джаганнатха</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">08.07.2026</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center"><img src="assets/smile_sad.png" style="height:22px;width:auto"></div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;line-height:1.5">Иностранцев внутрь не пускают, смотрели снаружи.</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:10px"><div style="height:40px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✓ Approve</div><div style="height:40px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✕ Delete</div></div>
+              </div>
+              <div style="flex:1"></div>
+              <div style="display:flex;justify-content:center;gap:8px;padding:14px 0;font-size:16px;color:#00ace8"><div style="width:36px;height:36px;border-radius:6px;background:#00ace8;color:#fff;display:flex;align-items:center;justify-content:center">1</div><div style="width:36px;height:36px;border-radius:6px;background:#dce8ec;display:flex;align-items:center;justify-content:center">2</div><div style="width:36px;height:36px;border-radius:6px;background:#dce8ec;display:flex;align-items:center;justify-content:center">3</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">3 · Regions и Guides</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 3.1 Regions list -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.1 · Regions — список регионов (drag-сортировка)</div>
+        <div data-screen-label="3.1 Админ Regions" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:44px;width:150px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px;box-sizing:border-box"><span style="font-size:20px;line-height:1">+</span> Add region</div>
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p01.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван <span style="color:#9b9b9b;margin-left:10px;font-size:14px">· 63 spots</span></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p04.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Джаганнатха Пури <span style="color:#9b9b9b;margin-left:10px;font-size:14px">· 2 spots</span></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p07.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Говардхан <span style="color:#9b9b9b;margin-left:10px;font-size:14px">· 2 spots</span></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p10.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Навадвипа <span style="color:#9b9b9b;margin-left:10px;font-size:14px">· 1 spot</span></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p13.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Экачакра <span style="color:#9b9b9b;margin-left:10px;font-size:14px">· 3 spots</span></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.2 Region edit -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.2 · Region — редактирование (Name RU/EN, Description, Photo)</div>
+        <div data-screen-label="3.2 Админ Region Edit" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column">
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:220px 1fr 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Name (RU / EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Вриндаван</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Vrindavan</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Description (RU / EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="min-height:110px;border:2px solid #dce8ec;border-radius:6px;padding:10px 12px;font-family:serif;font-size:14px;line-height:1.5;box-sizing:border-box">Вриндаван или Бриндабан — город в округе Матхура штата Уттар-Прадеш, Индия. Является святым местом паломничества для последователей вайшнавизма…</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="min-height:110px;border:2px solid #dce8ec;border-radius:6px;padding:10px 12px;font-family:serif;font-size:14px;line-height:1.5;box-sizing:border-box">Vrindavan is a town in the Mathura district of Uttar Pradesh, India. It is a Hindu pilgrimage site…</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Photo</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:16px"><img src="photos/p01.jpg" style="width:140px;height:100px;object-fit:cover"><span style="font-size:15px;color:#9b9b9b">Заменить файл…</span></div>
+              </div>
+            </div>
+            <div style="flex:none;display:flex;gap:14px;padding:14px 0 0">
+              <div style="height:50px;width:160px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Save</div>
+              <div style="height:50px;width:160px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Cancel</div>
+              <div style="flex:1"></div>
+              <div style="height:50px;width:160px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;box-sizing:border-box">Delete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.3 Guides list -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.3 · Guides — список гидов (drag-сортировка)</div>
+        <div data-screen-label="3.3 Админ Guides" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:44px;width:140px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px;box-sizing:border-box"><span style="font-size:20px;line-height:1">+</span> Add guide</div>
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p05.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Сокровище Махабхараты</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;color:#9b9b9b;font-size:14px">12 spots</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p08.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Откровения Рамаяны</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;color:#9b9b9b;font-size:14px">9 spots</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p16.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Загадки Ангкора</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;color:#9b9b9b;font-size:14px">7 spots</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:36px 120px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px;color:#c0ced4;font-size:18px">⠿</div>
+                <div style="padding:10px"><img src="photos/p11.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Базовые знания</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;color:#9b9b9b;font-size:14px">15 spots</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3.4 Guide edit -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">3.4 · Guide — редактирование (описание + состав маршрута)</div>
+        <div data-screen-label="3.4 Админ Guide Edit" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column">
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:200px 1fr 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Name (RU / EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Сокровище Махабхараты</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Treasure of Mahabharata</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Description</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="min-height:80px;border:2px solid #dce8ec;border-radius:6px;padding:10px 12px;font-family:serif;font-size:14px;line-height:1.5;box-sizing:border-box">Когда-то Великая целостная Веда была разделена на 4 части, потому что люди начали деградировать…</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Photo</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:16px"><img src="photos/p05.jpg" style="width:140px;height:100px;object-fit:cover"><span style="font-size:15px;color:#9b9b9b">Заменить файл…</span></div>
+              </div>
+              <div style="display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Spots</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;flex-direction:column;gap:8px">
+                  <div style="display:flex;align-items:center;gap:10px"><span style="color:#c0ced4;font-size:16px">⠿</span><div style="flex:1;padding:8px 12px;background:#f2f8fa;border-radius:6px;font-size:15px">1. Храм Кришны-Баларамы — Вриндаван</div><span style="color:#fe835d;font-size:14px">✕</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><span style="color:#c0ced4;font-size:16px">⠿</span><div style="flex:1;padding:8px 12px;background:#f2f8fa;border-radius:6px;font-size:15px">2. Храм Господа Джаганнатха — Джаганнатха Пури</div><span style="color:#fe835d;font-size:14px">✕</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><span style="color:#c0ced4;font-size:16px">⠿</span><div style="flex:1;padding:8px 12px;background:#f2f8fa;border-radius:6px;font-size:15px">3. Холм Говардхан — Говардхан</div><span style="color:#fe835d;font-size:14px">✕</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><div style="height:38px;min-width:280px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:14px;color:#00ace8;box-sizing:border-box">Выбрать место… <span style="font-size:10px">▼</span></div><div style="height:38px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 14px;font-size:14px">+ Add</div></div>
+                </div>
+              </div>
+            </div>
+            <div style="flex:none;display:flex;gap:14px;padding:14px 0 0">
+              <div style="height:50px;width:160px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Save</div>
+              <div style="height:50px;width:160px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Cancel</div>
+              <div style="flex:1"></div>
+              <div style="height:50px;width:160px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;box-sizing:border-box">Delete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">4 · Maps, Places, Directions</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 4.1 Maps -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.1 · Maps — офлайн-карты регионов + редактирование</div>
+        <div data-screen-label="4.1 Админ Maps" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:44px;width:130px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px;box-sizing:border-box"><span style="font-size:20px;line-height:1">+</span> Add map</div>
+            <div style="flex:none;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:1fr 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Вриндаван</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;font-family:monospace;font-size:14px">vrindavan.mbtiles · 48 МБ</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Ангкор Ват</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;font-family:monospace;font-size:14px">angkor_wat.mbtiles · 61 МБ</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Джаганнатха Пури</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;font-family:monospace;font-size:14px">puri.mbtiles · 35 МБ</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+            <div style="flex:1;border:2px dashed #dce8ec;border-radius:8px;margin-top:6px;display:flex;flex-direction:column;padding:16px;gap:12px">
+              <div style="font-size:14px;font-weight:500;color:#9b9b9b;letter-spacing:1px">MAP — EDIT</div>
+              <div style="display:grid;grid-template-columns:200px 1fr 1fr;border-top:1px solid #dce8ec;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Name (RU / EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Вриндаван</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Vrindavan</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">File</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:14px"><span style="font-family:monospace;font-size:14px">vrindavan.mbtiles</span><span style="font-size:15px;color:#9b9b9b">Заменить файл…</span></div>
+              </div>
+              <div style="display:flex;gap:14px">
+                <div style="height:44px;width:140px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">Save</div>
+                <div style="height:44px;width:140px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">Cancel</div>
+                <div style="flex:1"></div>
+                <div style="height:44px;width:140px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;box-sizing:border-box">Delete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.2 Places -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.2 · Places — отели и кафе (фильтр по региону, тип Hotel/Food)</div>
+        <div data-screen-label="4.2 Админ Places" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="height:44px;width:140px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px;box-sizing:border-box"><span style="font-size:20px;line-height:1">+</span> Add place</div>
+              <div style="height:44px;min-width:220px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:16px;color:#00ace8;box-sizing:border-box">Вриндаван <span style="font-size:11px">▼</span></div>
+              <div style="height:44px;width:70px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">OK</div>
+            </div>
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:120px 1fr 180px 120px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p10.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">МВТ Гестхаус и Ресторан</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Hotel</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 180px 120px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p11.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Бхакти Дхама</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Hotel</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 180px 120px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p17.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Кешав Кофе Хаус</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Food</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:120px 1fr 180px 120px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:10px"><img src="photos/p18.jpg" style="width:100px;height:100px;object-fit:cover"></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Рам Свитс</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Food</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.3 Place edit -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.3 · Place — редактирование (Region, Type, Address)</div>
+        <div data-screen-label="4.3 Админ Place Edit" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column">
+            <div style="flex:1;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:220px 1fr 220px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Region</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#00ace8;box-sizing:border-box">Вриндаван <span style="font-size:10px">▼</span></div></div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec">Type</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#00ace8;box-sizing:border-box">Hotel <span style="font-size:10px">▼</span></div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Main photo (315×315)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;align-items:center;gap:16px"><img src="photos/p10.jpg" style="width:100px;height:100px;object-fit:cover"><span style="font-size:15px;color:#9b9b9b">Заменить файл…</span></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Name (RU / EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">МВТ Гестхаус и Ресторан</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">MVT Guesthouse &amp; Restaurant</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Description</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="min-height:80px;border:2px solid #dce8ec;border-radius:6px;padding:10px 12px;font-family:serif;font-size:14px;line-height:1.5;box-sizing:border-box">Приятное и довольно роскошное место при ISKCON. Бронировать лучше заранее…</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Address</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Bhaktivedanta Swami Marg, Vrindavan, UP 281121</div></div>
+              </div>
+            </div>
+            <div style="flex:none;display:flex;gap:14px;padding:14px 0 0">
+              <div style="height:50px;width:160px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Save</div>
+              <div style="height:50px;width:160px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px">Cancel</div>
+              <div style="flex:1"></div>
+              <div style="height:50px;width:160px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;box-sizing:border-box">Delete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.4 Directions -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">4.4 · Directions — «Как добраться» + редактирование</div>
+        <div data-screen-label="4.4 Админ Directions" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none;border-radius:8px">
+          <div style="flex:none;height:36px;background:#f5f5f5;display:flex;align-items:center;border-bottom:1px solid #dddddd">
+            <div style="display:flex;align-items:center;gap:10px;padding:0 14px"><img src="assets/holyspots_app_icon.png" style="height:18px;width:18px;border-radius:4px"><span style="font-size:13px;color:#575f6a">Holy Spots — Администрирование</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;height:100%"><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:11px;height:1px;background:#575f6a"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center"><div style="width:10px;height:10px;border:1px solid #575f6a;box-sizing:border-box"></div></div><div style="width:46px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#575f6a">✕</div></div>
+          </div>
+          <div style="flex:none;background:#dce8ec;display:flex;align-items:center;gap:14px;padding:12px 14px;flex-wrap:wrap">
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Spots</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Regions</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Guides</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Maps</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Reviews</div>
+            <div style="height:44px;min-width:110px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Places</div>
+            <div style="height:44px;min-width:110px;background:#00ace8;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;padding:0 18px">Directions</div>
+            <div style="flex:1"></div>
+            <div style="font-size:17px;color:#00ace8">admin</div>
+            <div style="height:44px;min-width:76px;background:#fff;color:#00ace8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;padding:0 14px">Выход</div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div style="height:44px;width:170px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:16px;box-sizing:border-box"><span style="font-size:20px;line-height:1">+</span> Add direction</div>
+              <div style="height:44px;min-width:220px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:16px;color:#00ace8;box-sizing:border-box">Вриндаван <span style="font-size:11px">▼</span></div>
+              <div style="height:44px;width:70px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">OK</div>
+            </div>
+            <div style="flex:none;overflow:hidden;border-top:1px solid #dce8ec;display:flex;flex-direction:column">
+              <div style="display:grid;grid-template-columns:220px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Поездом из Дели</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;font-size:14px;line-height:1.5;color:#9b9b9b">Самый простой и безопасный способ — поезд с ж/д станции Нью-Дели до Матхуры, далее авто-рикша…</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:220px 1fr 160px 130px;align-items:center;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Такси</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center;font-size:14px;line-height:1.5;color:#9b9b9b">Такси из аэропорта Дели до Вриндавана занимает 3–4 часа в зависимости от трафика…</div>
+                <div style="padding:14px 10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center">Вриндаван</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;align-self:stretch;display:flex;align-items:center"><div style="height:40px;background:#dce8ec;color:#00ace8;border-radius:7px;display:flex;align-items:center;padding:0 16px;font-size:15px">✎ Edit</div></div>
+              </div>
+            </div>
+            <div style="flex:1;border:2px dashed #dce8ec;border-radius:8px;margin-top:6px;display:flex;flex-direction:column;padding:16px;gap:12px">
+              <div style="font-size:14px;font-weight:500;color:#9b9b9b;letter-spacing:1px">DIRECTION — EDIT</div>
+              <div style="display:grid;grid-template-columns:200px 1fr 1fr;border-top:1px solid #dce8ec;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Region / Name (RU · EN)</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;flex-direction:column;gap:8px"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#00ace8;box-sizing:border-box">Вриндаван <span style="font-size:10px">▼</span></div><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">Поездом из Дели</div></div>
+                <div style="padding:10px;border-left:1px solid #dce8ec;display:flex;flex-direction:column;gap:8px;justify-content:flex-end"><div style="height:40px;border:2px solid #dce8ec;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-family:serif;box-sizing:border-box">By train from Delhi</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #dce8ec;font-size:16px;color:#575f6a">
+                <div style="padding:14px 10px">Description</div>
+                <div style="padding:10px;border-left:1px solid #dce8ec"><div style="min-height:70px;border:2px solid #dce8ec;border-radius:6px;padding:10px 12px;font-family:serif;font-size:14px;line-height:1.5;box-sizing:border-box">Самый простой и безопасный способ — поезд с железнодорожной станции Нью-Дели до Матхуры, далее авто-рикша до Вриндавана…</div></div>
+              </div>
+              <div style="display:flex;gap:14px">
+                <div style="height:44px;width:140px;background:#47bfed;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">Save</div>
+                <div style="height:44px;width:140px;background:#dce8ec;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px">Cancel</div>
+                <div style="flex:1"></div>
+                <div style="height:44px;width:140px;background:#fff;border:2px solid #fe835d;color:#fe835d;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;box-sizing:border-box">Delete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:24px;font-size:14px;color:#575f6a">
+    <a href="05 Windows Desktop.dc.html">← 05 Windows</a>
+    <a href="00 Обзор.dc.html">К обзору →</a>
+  </div>
+</div>
+</x-dc>
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "06 Админка";
+  // rAF raced with a short timeout: inside a cross-origin iframe (PrintMode),
+  // rAF can be throttled or paused even while the tab is focused, which would
+  // hang the scroll loop and never reach print(). Same pattern as
+  // buildExportSettleScript (export/shared.ts).
+  var raf = function () {
+    return Promise.race([
+      new Promise(function (r) { requestAnimationFrame(r); }),
+      new Promise(function (r) { setTimeout(r, 50); }),
+    ]);
+  };
+  var t0 = performance.now();
+  var mark = function (phase) {
+    var ms = Math.round(performance.now() - t0);
+    console.info('[autoprint]', phase, ms + 'ms');
+    try { parent.postMessage({ __omelette_autoprint: { phase: phase, ms: ms } }, '*'); } catch (e) {}
+  };
+  mark('start');
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    // A placeholder whose fetch failed (.sc-placeholder-error inside) keeps
+    // .sc-placeholder forever — don't wait on it. JS loop, not :has(), so an
+    // engine without :has() support can't throw out of the while and skip
+    // print() entirely.
+    var pendingPlaceholders = function () {
+      var all = settleRoot.querySelectorAll('.sc-placeholder'), n = 0;
+      for (var i = 0; i < all.length; i++)
+        if (!all[i].querySelector('.sc-placeholder-error')) n++;
+      return n;
+    };
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        pendingPlaceholders() === 0;
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  mark('settle-done' + (settleRoot ? ' (errs=' + settleRoot.querySelectorAll('.sc-placeholder-error').length + ' pending=' + pendingPlaceholders() + ')' : ''));
+  // Project support.js may predate runtime default-seeding; push via bridge.
+  if (isDc && window.__dcSetProps && window.__dcRootName) {
+    try {
+      const dpEl = document.querySelector('script[data-dc-script]');
+      const meta = JSON.parse((dpEl && dpEl.getAttribute('data-props')) || '{}');
+      const bag = {};
+      for (const k in meta)
+        if (k[0] !== '$' && meta[k] && meta[k].default !== undefined)
+          bag[k] = meta[k].default;
+      if (Object.keys(bag).length) {
+        window.__dcSetProps(window.__dcRootName(), bag);
+        await new Promise((r) => setTimeout(r, 50));
+      }
+    } catch (e) {}
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    var scrollDeadline = Date.now() + 4000;
+    for (let y = 0; y <= full && Date.now() < scrollDeadline; y += step) {
+      window.scrollTo(0, y);
+      await raf();
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  mark('scroll-done');
+  try { await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 3000))]); } catch (e) {}
+  mark('fonts-done');
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await raf();
+    sweep();
+    await raf();
+  } catch (e) {}
+  // A document that owns its print CSS (the doc-page starter injects the
+  // meta at runtime; hand-rolled print designs author it) gets no automatic
+  // page geometry and keeps its forced breaks: strip the injected default
+  // @page — write time cannot see a runtime-injected meta — skip the frame
+  // override below, and skip the fakepage-flattening further down. What
+  // still applies: the print baseline and break-hygiene defaults (no @page
+  // in either; low specificity, so the document's own print CSS wins) and
+  // the break-inside relaxation on >page elements (avoid on those cannot
+  // be honored whoever authored it).
+  var ownsPrint = !!document.querySelector('meta[name="omelette-owns-print" i]');
+  if (ownsPrint) {
+    var dst = document.querySelector('style[data-omelette-print-defaults]');
+    if (dst && dst.textContent) {
+      dst.textContent = dst.textContent.replace(/@page\b[^{}]*\{[^}]*\}/, '');
+    }
+  }
+  // Size the PDF page to the rendered design unless the file opted into
+  // standard paper via @page{size:letter|A4|…} or declared print ownership
+  // via the meta above. Decks own their own @page.
+  // Wrappers (body, …) lose padding+margin so the frame sits at (0,0); the
+  // frame itself loses only margin — its padding is INSIDE the measured
+  // rect and must stay, or content shifts and leaves a gap at bottom/right.
+  var __m = null;
+  try { __m = (() => {
+  var STAMP = true;
+  var docEl = document.documentElement;
+  var doc = { width: docEl.scrollWidth, height: docEl.scrollHeight };
+  // Name-presence check, case-insensitive — the same contract as the
+  // instant-PDF path's runtime check in deck-stage-export.ts. The name is
+  // a string literal here because that file interpolates this script into
+  // its print script, so importing a shared constant from it would be a
+  // cycle; measure.test.ts pins the literal so the two cannot drift apart
+  // silently.
+  var ownsPrint = !!document.querySelector('meta[name="omelette-owns-print" i]');
+
+  var ds = document.querySelector('deck-stage');
+  if (ds) {
+    var dw = Number(ds.getAttribute('width')) || 1920;
+    var dh = Number(ds.getAttribute('height')) || 1080;
+    var n = typeof ds.length === 'number' ? ds.length : ds.children.length;
+    var idx = typeof ds.index === 'number' ? ds.index : 0;
+    var frames = [];
+    for (var i = 0; i < n; i++) frames.push({ left: 0, top: 0, width: dw, height: dh });
+    return { kind: 'deck', source: 'declared', doc: doc, frames: frames,
+      authored: frames.map(function(){return{width:true,height:true}}),
+      deck: { width: dw, height: dh, slideCount: n, index: idx },
+      signals: { paperPage: false, pxPage: false, ownsPrint: ownsPrint } };
+  }
+
+  // Declared kind: a doc-page tag names the kind outright, so no signal
+  // heuristics run (like the deck branch above, signals report false —
+  // they describe inferred classifications only). The tag alone is not
+  // trusted: the element must have upgraded (shadowRoot present), so a
+  // leftover tag whose script was deleted falls through to the heuristics
+  // that handle plain markup.
+  var stageSx = window.scrollX || 0, stageSy = window.scrollY || 0;
+  var dp = document.querySelector('doc-page');
+  if (dp && dp.shadowRoot) {
+    // Crop to the sheet, not the host — the desk around it is screen-only
+    // chrome that must not land in PNG exports.
+    var sheet = dp.shadowRoot.querySelector('.sheet');
+    var sr = (sheet || dp).getBoundingClientRect();
+    return { kind: 'paper-doc', source: 'declared', doc: doc,
+      frames: [{ left: sr.left + stageSx, top: sr.top + stageSy,
+        width: sr.width, height: sr.height }],
+      authored: [{ width: false, height: false }],
+      signals: { paperPage: false, pxPage: false, ownsPrint: ownsPrint } };
+  }
+  var paperPage = false, pxPage = false;
+  var eachRule = function (fn) {
+    for (var s = 0; s < document.styleSheets.length; s++) {
+      var rs; try { rs = document.styleSheets[s].cssRules; } catch (e) { continue; }
+      for (var r = 0; r < rs.length; r++) {
+        fn(rs[r]);
+        if (rs[r].cssRules) for (var n = 0; n < rs[r].cssRules.length; n++) fn(rs[r].cssRules[n]);
+      }
+    }
+  };
+  eachRule(function (r) {
+    if (r.type !== 6) return;
+    var m = /\bsize\s*:\s*([^;}]+)/i.exec(r.cssText || '');
+    if (!m) return;
+    if (/\b(letter|a[3-5]|legal|ledger)\b/i.test(m[1])) paperPage = true;
+    if (/\d+(?:\.\d+)?px\b/i.test(m[1])) pxPage = true;
+  });
+  var signals = { paperPage: paperPage, pxPage: pxPage, ownsPrint: ownsPrint };
+
+  var pxVal = function (v) {
+    var m = /^(\d+(?:\.\d+)?)px$/.exec(v || ''); return m ? +m[1] : 0;
+  };
+  var authoredPx = function (el, prop) {
+    if (pxVal(el.style[prop])) return true;
+    var attr = el.getAttribute(prop);
+    if (attr && /^\d+$/.test(attr)) return true;
+    var hit = false;
+    eachRule(function (r) {
+      if (hit || r.type !== 1 || !r.style) return;
+      try { if (el.matches(r.selectorText) && pxVal(r.style[prop])) hit = true; } catch (e) {}
+    });
+    return hit;
+  };
+
+  var el = document.body, rootPxW = false;
+  for (;;) {
+    var kids = [];
+    for (var c = 0; c < el.children.length; c++) {
+      var t = el.children[c].tagName;
+      if (t !== 'SCRIPT' && t !== 'STYLE' && t !== 'TEMPLATE') kids.push(el.children[c]);
+    }
+    if (kids.length !== 1 || !(kids[0] instanceof HTMLElement)) break;
+    if (STAMP) el.setAttribute('data-om-frame-wrap', '');
+    el = kids[0];
+    rootPxW = authoredPx(el, 'width');
+    if (rootPxW) break;
+  }
+  if (!rootPxW) rootPxW = authoredPx(el, 'width');
+
+  // @page{size:letter} alone is a flowing doc; with a px-width root it's a
+  // fixed sheet pretending to be paper — fall through and size to render.
+  if (paperPage && !rootPxW) {
+    return { kind: 'paper-doc', source: 'inferred', doc: doc, signals: signals,
+      frames: [{ left: 0, top: 0, width: doc.width, height: doc.height }],
+      authored: [{ width: false, height: false }] };
+  }
+
+  var sx = window.scrollX || 0, sy = window.scrollY || 0;
+  var rectOf = function (e) {
+    var r = e.getBoundingClientRect();
+    var oy; try { oy = getComputedStyle(e).overflowY; } catch (err) {}
+    var h = oy === 'visible' ? Math.max(r.height, e.scrollHeight || 0) : r.height;
+    return { left: r.left + sx, top: r.top + sy, width: r.width, height: h };
+  };
+
+  // Multi-frame: off unless the page opts in via data-om-multi-frame on the
+  // stop element — the explicit opt-in is what guards against card grids
+  // and pricing tables that match the geometry but aren't separate
+  // canvases. Two ways to name the frames, explicit first:
+  // 1. Descendants marked data-om-frame-export (the social-frames starter
+  //    marks each asset frame; shells/panels around them are presentation,
+  //    so nesting is expected). Document order.
+  // 2. Fallback, no marked descendants: direct children with an authored px
+  //    width AND height (the original geometry heuristic).
+  // Frames may be different sizes (a gallery mixes 1080×1920 stories with
+  // 728×90 banners); data-om-frame-label rides along for export filenames.
+  if (el.hasAttribute('data-om-multi-frame')) {
+    var visOk = function (e) {
+      var cs; try { cs = getComputedStyle(e); } catch (err) { return false; }
+      return cs.display !== 'none' && cs.visibility !== 'hidden' && cs.position !== 'fixed';
+    };
+    // A frame's crop is its VISUAL box — never the scrollHeight-inflated
+    // rect that rectOf computes for page roots. Shadow-DOM hover controls
+    // (image-slot's Replace bar parks 29px below its host) and similar
+    // escaping UI contribute scrollable overflow to the frame, and the
+    // inflated height both squashes the nominal-size resize and drags
+    // content below the frame into the crop. Zoom-independent; bit every
+    // slot-bearing frame.
+    var frameRectOf = function (e) {
+      var r = e.getBoundingClientRect();
+      return { left: r.left + sx, top: r.top + sy, width: r.width, height: r.height };
+    };
+    var pushCand = function (list, e) {
+      if (!visOk(e)) return;
+      var rc = frameRectOf(e);
+      if (rc.width < 2 || rc.height < 2) return;
+      var lbl = e.getAttribute('data-om-frame-label');
+      if (lbl) rc.label = lbl;
+      list.push(rc);
+    };
+    var cands = [];
+    var marked = el.querySelectorAll('[data-om-frame-export]');
+    if (marked.length) {
+      for (var mk = 0; mk < marked.length; mk++) pushCand(cands, marked[mk]);
+    } else {
+      for (var k = 0; k < el.children.length; k++) {
+        var ch = el.children[k];
+        if (!authoredPx(ch, 'width') || !authoredPx(ch, 'height')) continue;
+        pushCand(cands, ch);
+      }
+    }
+    if (cands.length >= 2) {
+      return { kind: 'multi-frame', source: 'inferred', doc: doc, signals: signals,
+        frames: cands, authored: cands.map(function(){return{width:true,height:true}}) };
+    }
+  }
+
+  if (STAMP) el.setAttribute('data-om-frame', '');
+  return { kind: 'single-canvas', source: 'inferred', doc: doc, signals: signals,
+    frames: [rectOf(el)],
+    authored: [{ width: rootPxW, height: authoredPx(el, 'height') }] };
+})(); } catch (e) {}
+  var frame = null;
+  if (!ownsPrint && __m && __m.kind === 'single-canvas') {
+    var f = __m.frames && __m.frames[0];
+    if (f && f.width >= 200 && f.height >= 200) {
+      frame = f;
+      var fst = document.createElement('style');
+      fst.textContent = '@media print{@page{size:' + Math.ceil(f.width) + 'px ' +
+        Math.ceil(f.height) + 'px;margin:0}' +
+        'html,body,[data-om-frame-wrap]{padding:0!important;margin:0!important;background:none!important}' +
+        '[data-om-frame]{margin:0!important}}';
+      document.body.appendChild(fst);
+    }
+  }
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks (slides
+  // are sized to the page) and for fixed-size canvases (frame set, or an author
+  // px-based @page) — runs as before for flowing docs on letter/A4.
+  try {
+    if (!ds && !frame && !(__m && __m.signals && __m.signals.pxPage)) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          // An owns-print doc's forced breaks are intentional sheet
+          // boundaries, never fake-paged simulation — don't strip them.
+          // The break-inside relaxation above still applies: avoid on a
+          // >page element is impossible to honor whoever authored it.
+          if (
+            !ownsPrint &&
+            (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always')
+          ) {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  mark('print-calling');
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

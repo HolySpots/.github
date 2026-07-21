@@ -1,0 +1,28 @@
+/* HolySpots typography — Android used Roboto (Light/Regular/Medium); iOS used the system face.
+   2026 modernization: Roboto via Google Fonts everywhere; admin's `font-family: serif` data fields kept as a serif alias. */
+:root{
+--font-core:'Roboto',-apple-system,'Segoe UI',system-ui,sans-serif;
+--font-serif-data:Georgia,'Times New Roman',serif; /* admin.less input/select font-family: serif */
+--fw-light:300; /* @kind font */
+--fw-regular:400; /* @kind font */
+--fw-medium:500; /* @kind font */
+--fw-bold:700; /* @kind font */
+/* mobile scale (sp values from layouts, 1sp = 1px at mdpi) */
+--fs-caption:11px;   /* region header action labels */
+--fs-small:12px;     /* meta, work status, delete link */
+--fs-status:14px;    /* photo-overlay status */
+--fs-list-title:15px;/* spot list item name */
+--fs-body:16px;      /* descriptions, check-in label */
+--fs-counter:17px;   /* photos count */
+--fs-title:18px;     /* screen titles, tabs, region names */
+/* admin scale */
+--fs-admin-body:18px;
+--fs-admin-menu:20px;
+--fs-admin-error:14px;
+--fs-admin-file:15px;
+--lh-body:1.5; /* @kind font */ /* lineSpacingMultiplier 1.5 on descriptions */
+--lh-tight:1.2; /* @kind font */
+}
+body{font-family:var(--font-core);color:var(--text-body);}
+a{color:var(--color-link);text-decoration:none;}
+a:hover{color:var(--color-primary-hover);}

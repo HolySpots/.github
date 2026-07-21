@@ -1,0 +1,54 @@
+/* HolySpots colors — sourced from iOS Constants.h, Android color.xml, admin.less (2012 codebases) */
+:root{
+/* base — blues */
+--blue-600:#0091c4; /* derived hover shade */
+--blue-500:#00ace8; /* iOS kColorBlue RGB(0,172,232); admin .menu selected; Android blue_2 #00ace9 */
+--blue-400:#47bfed; /* admin .btn-save, checked chips */
+--blue-300:#60aae5; /* Android blue_1 / text_dark_blue */
+--blue-100:#cff2ff; /* Android like_blue_bg (opaque) */
+--cloud-200:#dce8ec; /* admin canvas + secondary buttons */
+/* base — neutrals */
+--white:#ffffff;
+--gray-50:#f9f9f9;  /* Android tab_bg */
+--gray-100:#f5f5f5; /* Android primary (toolbar) */
+--gray-150:#eeeded; /* Android gray_1 */
+--gray-200:#e0e0e0; /* divider_list */
+--gray-250:#dddddd; /* divider_tab */
+--gray-300:#d9d9d9; /* text_light_gray */
+--gray-400:#c6c6c6; /* text_middle_gray / divider */
+--gray-500:#b2b6bb; /* admin input border */
+--gray-600:#9b9b9b; /* text_gray */
+--gray-700:#575f6a; /* admin body text */
+--gray-800:#4a4a4a; /* iOS kColorDarkGrey / Android gray_3 */
+--black:#000000;
+/* base — warm accents */
+--coral-500:#fe835d; /* admin cancel/delete */
+--red-500:#ff5e5e;   /* admin validation errors */
+--red-600:#fe443a;   /* Android red_bg */
+/* semantic */
+--color-primary:var(--blue-500);
+--color-primary-hover:var(--blue-600);
+--color-accent:var(--blue-400);
+--color-link:var(--blue-500);
+--color-danger:var(--coral-500);
+--color-danger-strong:var(--red-600);
+--color-error-text:var(--red-500);
+--surface-page:var(--white);
+--surface-muted:var(--gray-100);
+--surface-tab:var(--gray-50);
+--surface-cloud:var(--cloud-200);
+--surface-like:var(--blue-100);
+--text-title:var(--black);
+--text-body:var(--gray-800);
+--text-admin:var(--gray-700);
+--text-secondary:var(--gray-600);
+--text-tertiary:var(--gray-400);
+--text-disabled:var(--gray-300);
+--text-inverse:var(--white);
+--text-on-photo:var(--white);
+--divider:var(--gray-200);
+--divider-strong:var(--gray-400);
+--divider-light:#f4f4f4;
+--divider-tab:var(--gray-250);
+--scrim-photo:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 100%); /* @kind color */
+}

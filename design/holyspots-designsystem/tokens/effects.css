@@ -1,0 +1,20 @@
+/* HolySpots radii, shadows, motion */
+:root{
+/* radii — exact values from admin.less/login.less; mobile surfaces are square-edged */
+--radius-card:5px;   /* login card */
+--radius-chip:6px;   /* checkbox chips, selects */
+--radius-btn:7px;    /* buttons */
+--radius-input:9px;  /* login inputs */
+--radius-round:50%;
+/* shadows — 2012 apps used baked-in PNG gradients under toolbars/lists; 2026 equivalents */
+--shadow-list-top:inset 0 5px 5px -4px rgba(0,0,0,.15); /* shadow_main drawable */
+--shadow-card:0 1px 3px rgba(0,0,0,.10);
+--shadow-toolbar:0 1px 0 var(--divider-tab);
+--shadow-dialog:0 8px 30px rgba(0,0,0,.18);
+/* motion — fade-in images (app:animation fade_in), slide-up dialogs (abc_slide_in_bottom), fades for alerts */
+--ease-standard:cubic-bezier(.2,0,0,1); /* @kind other */
+--dur-fast:150ms; /* @kind other */
+--dur-base:250ms; /* @kind other */
+/* press/hover — Android used ripple #1f000000; 2026: darken primary, 12% black overlay on neutrals */
+--press-overlay:rgba(0,0,0,.12);
+}

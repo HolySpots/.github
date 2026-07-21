@@ -1,0 +1,22 @@
+/* HolySpots spacing & sizing — 5px base grid observed in mobile layouts (5/10/15/20) and admin (10/12/14/20/35) */
+:root{
+--space-2xs:5px;
+--space-xs:10px;
+--space-sm:12px;
+--space-md:15px;  /* default mobile screen margin */
+--space-lg:20px;  /* section spacing */
+--space-xl:35px;  /* admin .buttons block margin */
+/* control + layout sizes */
+--control-h-sm:39px;  /* admin filter inputs */
+--control-h-md:44px;  /* admin icon buttons, day chips; min touch target */
+--control-h-lg:50px;  /* mobile tabs row, check-in bar */
+--control-h-xl:59px;  /* admin buttons, selects, menu pills */
+--btn-min-w:120px;    /* admin menu pill */
+--btn-w:184px;        /* admin .btn fixed width */
+--thumb-size:120px;   /* mobile list photo 120dp */
+--review-photo:80px;
+--region-photo-h:180px;
+--spot-hero-h:280px;
+--admin-cell-h:100px;
+--rate-btn:45px;
+}

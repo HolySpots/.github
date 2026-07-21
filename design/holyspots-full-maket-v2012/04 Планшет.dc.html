@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecef;font-family:'Roboto',Helvetica,Arial,sans-serif}
+a{color:#60aae5;text-decoration:none}a:hover{color:#00ace9}
+</style>
+</helmet>
+<div style="padding:48px 56px;display:flex;flex-direction:column;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+    <div style="font-size:13px;font-weight:500;letter-spacing:2px;color:#9b9b9b;text-transform:uppercase">HolySpots · Flutter · Раздел 04</div>
+    <div style="font-size:34px;font-weight:300;color:#000">Планшет — iPad и Android tablet</div>
+    <div style="font-size:15px;color:#575f6a;line-height:1.6">Адаптивная раскладка 1024×768 (landscape). В iOS-кодовой базе для iPad заложены отдельные ресурсы (spots_background~ipad) — список поверх фоновой подложки; на широком экране список и деталь совмещаются в master-detail. Все компоненты те же, что на телефоне.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:22px;font-weight:400;color:#000;border-bottom:2px solid #dddddd;padding-bottom:10px;max-width:900px">1 · Master-detail</div>
+    <div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+      <!-- 1.1 Регионы + место -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.1 · Список мест + карточка места</div>
+        <div data-screen-label="1.1 Планшет master-detail" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:24px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:13px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:16px;height:56px;padding:0 16px">
+            <img src="assets/ab_icon_back.png" style="height:18px;width:auto">
+            <div style="flex:1;font-size:20px;color:#000">Вриндаван</div>
+            <img src="assets/ab_icon_search.png" style="height:22px;width:auto">
+            <img src="assets/ab_icon_map.png" style="height:22px;width:auto">
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;overflow:hidden">
+            <div style="width:400px;flex:none;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;overflow:hidden">
+              <img src="photos/p01.jpg" style="width:100%;height:140px;object-fit:cover;flex:none">
+              <div style="display:flex;border-bottom:1px solid rgba(0,0,0,.06);flex:none">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0"><img src="assets/ic_message_small.png" style="height:20px;width:auto"><span style="font-size:11px;color:#9b9b9b">Отзывы</span></div>
+                <div style="width:1px;background:#f4f4f4;margin:8px 0"></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0"><img src="assets/ic_stay_small.png" style="height:20px;width:auto"><span style="font-size:11px;color:#9b9b9b">Отели</span></div>
+                <div style="width:1px;background:#f4f4f4;margin:8px 0"></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0"><img src="assets/ic_food_small.png" style="height:20px;width:auto"><span style="font-size:11px;color:#9b9b9b">Еда</span></div>
+                <div style="width:1px;background:#f4f4f4;margin:8px 0"></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 0"><img src="assets/ic_way_small.png" style="height:20px;width:auto"><span style="font-size:11px;color:#9b9b9b">Маршрут</span></div>
+              </div>
+              <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+                <div style="display:flex;background:rgba(96,170,229,.10)">
+                  <img src="photos/p02.jpg" style="width:100px;height:100px;object-fit:cover;flex:none">
+                  <div style="flex:1;position:relative;padding:12px 12px 8px">
+                    <div style="display:flex;gap:8px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Храм Кришны-Баларамы</div><div style="font-size:11px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div>
+                    <div style="position:absolute;left:12px;right:34px;bottom:8px;font-size:12px;color:#9b9b9b;line-height:1.3">Самый популярный храм Вриндавана</div>
+                    <img src="assets/icon_checkin.png" style="position:absolute;right:12px;bottom:8px;height:16px;width:auto">
+                  </div>
+                </div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex"><img src="photos/p03.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;position:relative;padding:12px 12px 8px"><div style="display:flex;gap:8px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Самадхи Шрилы Прабхупады</div><div style="font-size:11px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div><div style="position:absolute;left:12px;right:12px;bottom:8px;font-size:12px;color:#9b9b9b;line-height:1.3">Мандир из чистого мрамора</div></div></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex"><img src="photos/p06.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;position:relative;padding:12px 12px 8px"><div style="display:flex;gap:8px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Институт и библиотека Вриндавана</div><div style="font-size:11px;font-weight:500;color:#fe443a;white-space:nowrap;padding-top:3px">ЗАКРЫТО</div></div><div style="position:absolute;left:12px;right:12px;bottom:8px;font-size:12px;color:#9b9b9b;line-height:1.3">Древние рукописи и манускрипты</div></div></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex"><img src="photos/p09.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;position:relative;padding:12px 12px 8px"><div style="display:flex;gap:8px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Вараха-гхата</div><div style="font-size:11px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div><div style="position:absolute;left:12px;right:12px;bottom:8px;font-size:12px;color:#9b9b9b;line-height:1.3">Гхата на берегу Ямуны</div></div></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex"><img src="photos/p13.jpg" style="width:100px;height:100px;object-fit:cover;flex:none"><div style="flex:1;position:relative;padding:12px 12px 8px"><div style="display:flex;gap:8px;justify-content:space-between"><div style="font-size:15px;color:#000;line-height:1.3">Тропа мальчиков-пастушков</div><div style="font-size:11px;font-weight:500;color:#60aae5;white-space:nowrap;padding-top:3px">ОТКРЫТО</div></div><div style="position:absolute;left:12px;right:12px;bottom:8px;font-size:12px;color:#9b9b9b;line-height:1.3">Рамана-рети</div></div></div>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+              <div style="position:relative;height:280px;flex:none">
+                <img src="photos/p01.jpg" style="width:100%;height:100%;object-fit:cover">
+                <div style="position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.55) 100%)"></div>
+                <div style="position:absolute;right:15px;bottom:64px;display:flex;align-items:center;gap:10px"><img src="assets/icon_picture_white.png" style="height:16px;width:auto"><span style="font-size:17px;color:#fff">12</span></div>
+                <div style="position:absolute;left:15px;right:15px;bottom:38px;font-size:18px;color:#fff">Храм Кришны-Баларамы</div>
+                <div style="position:absolute;left:15px;bottom:10px;font-size:16px;color:#c6c6c6">Вриндаван</div>
+                <div style="position:absolute;right:15px;bottom:10px;font-size:14px;font-weight:500;color:#7ed9f7">ОТКРЫТО</div>
+              </div>
+              <div style="flex:none;display:flex;align-items:center;gap:15px;padding:15px"><img src="assets/ic_message_small.png" style="height:18px;width:auto"><span style="font-size:12px;color:#000">Отзывы</span></div>
+              <div style="flex:none;display:flex;align-items:center;background:rgba(207,242,255,.55);border-bottom:1px solid rgba(0,0,0,.06)">
+                <div style="padding:15px;font-size:12px;color:#00ace9">Понравилось место?</div>
+                <div style="flex:1"></div>
+                <div style="display:flex;align-items:center;margin-right:5px">
+                  <div style="width:45px;height:45px;display:flex;align-items:center;justify-content:center"><img src="assets/smile_sad.png" style="height:22px;width:auto"></div>
+                  <div style="width:45px;height:45px;display:flex;align-items:center;justify-content:center"><img src="assets/smile_normal.png" style="height:22px;width:auto"></div>
+                  <div style="width:45px;height:45px;display:flex;align-items:center;justify-content:center"><img src="assets/smile.png" style="height:22px;width:auto"></div>
+                </div>
+              </div>
+              <div style="flex:1;overflow:hidden;padding:20px 20px 0;font-size:16px;font-weight:300;color:#000;line-height:1.5">Этот великолепный храм был сооружён в 1975 году Его Божественной Милостью А. Ч. Бхактиведантой Свами Прабхупадой, ачарией-основателем ИСККОН, и является сегодня одним из самых популярных храмов во Вриндаване. Главными Божествами храма являются Шри Шри Кришна-Баларама и, на правом алтаре, Шри Шри Радха-Шьямасундара с гопи Лалитой и Вишакхой…</div>
+              <div style="flex:none;height:50px;background:#60aae5;display:flex;align-items:center;justify-content:center;gap:8px">
+                <img src="assets/icon_checkin_white.png" style="height:18px;width:auto">
+                <span style="font-size:16px;font-weight:500;color:#fff;letter-spacing:.5px">ЧЕКИН</span>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:200px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 1.2 Главный экран планшета -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.2 · Главный экран — регионы + карта</div>
+        <div data-screen-label="1.2 Планшет главный" style="width:1024px;height:768px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:24px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:13px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:18px;height:56px;padding:0 16px">
+            <div style="flex:1;font-size:20px;color:#000">Holy Spots</div>
+            <img src="assets/ab_icon_search.png" style="height:22px;width:auto">
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:1;display:flex;overflow:hidden">
+            <div style="width:400px;flex:none;border-right:1px solid #e0e0e0;display:flex;flex-direction:column;overflow:hidden">
+              <div style="flex:none;height:50px;background:#f9f9f9;display:flex;align-items:stretch">
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#60aae5">Места</div>
+                <div style="width:1px;margin:5px 0;background:#dddddd"></div>
+                <div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#9b9b9b">Гиды</div>
+              </div>
+              <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+                <div style="position:relative;height:160px;flex:none"><img src="photos/p01.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Вриндаван</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">63</span></div><div style="position:absolute;inset:0;border-left:4px solid #60aae5;box-sizing:border-box"></div></div>
+                <div style="position:relative;height:160px;flex:none"><img src="photos/p04.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Джаганнатха Пури</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">2</span></div></div>
+                <div style="position:relative;height:160px;flex:none"><img src="photos/p07.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Говардхан</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">2</span></div></div>
+                <div style="position:relative;height:160px;flex:none"><img src="photos/p13.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Экачакра</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">3</span></div></div>
+              </div>
+            </div>
+            <div style="flex:1;position:relative;overflow:hidden;background:#e8e6e1">
+              <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#eceae5 0 26px,#e6e4df 26px 52px)"></div>
+              <div style="position:absolute;top:180px;left:-40px;width:800px;height:14px;background:#fff;transform:rotate(-6deg)"></div>
+              <div style="position:absolute;top:60px;left:340px;width:10px;height:800px;background:#fff;transform:rotate(11deg)"></div>
+              <div style="position:absolute;top:480px;left:-30px;width:300px;height:220px;background:#cfe0f2;border-radius:45% 55% 40% 60%"></div>
+              <div style="position:absolute;bottom:14px;left:14px;font-family:monospace;font-size:11px;color:#9b9b9b;background:rgba(255,255,255,.7);padding:3px 7px;border-radius:3px">тайлы карты — плейсхолдер</div>
+              <img src="assets/icon_spot.png" style="position:absolute;top:200px;left:130px;height:40px;width:auto">
+              <img src="assets/icon_spot.png" style="position:absolute;top:320px;left:330px;height:40px;width:auto">
+              <img src="assets/icon_spot.png" style="position:absolute;top:450px;left:220px;height:40px;width:auto">
+              <img src="assets/icon_spot.png" style="position:absolute;top:250px;left:470px;height:40px;width:auto">
+              <div style="position:absolute;top:140px;left:88px;width:300px;background:#fff;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;overflow:hidden;z-index:2">
+                <img src="photos/p01.jpg" style="width:85px;height:85px;object-fit:cover;flex:none">
+                <div style="flex:1;padding:10px;display:flex;flex-direction:column;justify-content:space-between">
+                  <div style="font-size:14px;color:#000;line-height:1.3">Храм Кришны-Баларамы</div>
+                  <div style="font-size:12px;color:#9b9b9b">Вриндаван · ОТКРЫТО</div>
+                </div>
+              </div>
+              <img src="assets/btn_online_on.png" style="position:absolute;right:10px;top:12px;height:44px;width:auto">
+              <img src="assets/icon_locate.png" style="position:absolute;right:10px;bottom:15px;height:44px;width:auto">
+            </div>
+          </div>
+          <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:200px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+
+      <!-- 1.3 Планшет портрет -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;font-weight:500;color:#9b9b9b">1.3 · Портрет 768×1024 — телефонная раскладка на широкой сетке</div>
+        <div data-screen-label="1.3 Планшет портрет" style="width:768px;height:1024px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.15);overflow:hidden;position:relative;display:flex;flex-direction:column;flex:none">
+          <div style="height:24px;flex:none;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:0 21px">
+            <div style="font-size:13px;font-weight:600;color:#000;letter-spacing:.3px">9:41</div>
+            <div style="display:flex;align-items:center;gap:6px"><div style="display:flex;align-items:flex-end;gap:1.5px"><div style="width:3px;height:4px;background:#000;border-radius:1px"></div><div style="width:3px;height:6px;background:#000;border-radius:1px"></div><div style="width:3px;height:8px;background:#000;border-radius:1px"></div><div style="width:3px;height:10px;background:#000;border-radius:1px"></div></div><div style="width:24px;height:11px;border:1px solid rgba(0,0,0,.35);border-radius:3px;padding:1px;box-sizing:border-box"><div style="width:70%;height:100%;background:#000;border-radius:1.5px"></div></div></div>
+          </div>
+          <div style="flex:none;background:#f5f5f5;display:flex;align-items:center;gap:18px;height:56px;padding:0 16px">
+            <div style="flex:1;font-size:20px;color:#000">Holy Spots</div>
+            <img src="assets/ab_icon_search.png" style="height:22px;width:auto">
+            <img src="assets/ab_icon_map.png" style="height:22px;width:auto">
+          </div>
+          <div style="flex:none;height:1px;background:#dddddd"></div>
+          <div style="flex:none;height:50px;background:#f9f9f9;display:flex;align-items:stretch">
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#60aae5">Места</div>
+            <div style="width:1px;margin:5px 0;background:#dddddd"></div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:18px;color:#9b9b9b">Гиды</div>
+          </div>
+          <div style="flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#f4f4f4;align-content:start">
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p01.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Вриндаван</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">63</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p04.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Джаганнатха Пури</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">2</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p07.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Говардхан</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">2</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p10.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Навадвипа</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">1</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p13.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Экачакра</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">3</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p16.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Ангкор-Ват</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">5</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p19.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Ришикеш</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">4</span></div></div>
+            <div style="position:relative;height:200px;background:#fff"><img src="photos/p21.jpg" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,rgba(0,0,0,.55))"></div><div style="position:absolute;left:15px;bottom:10px;font-size:18px;color:#fff">Харидвар</div><div style="position:absolute;right:15px;bottom:10px;display:flex;align-items:center;gap:6px"><img src="assets/icon_pin_white.png" style="height:16px;width:auto"><span style="font-size:18px;color:#fff">6</span></div></div>
+          </div>
+          <div style="position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:200px;height:5px;border-radius:3px;background:rgba(0,0,0,.3);z-index:3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:24px;font-size:14px;color:#575f6a">
+    <a href="03 Телефон - Отзывы и сервисы.dc.html">← 03 Отзывы и сервисы</a>
+    <a href="05 Windows Desktop.dc.html">Далее: 05 Windows →</a>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
