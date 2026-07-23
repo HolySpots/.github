@@ -1,0 +1,20 @@
+name: holyspots_admin_v2
+description: HolySpots admin panel — interactive prototype (V2, modern minimalist). Adaptive for phone / tablet / desktop.
+publish_to: "none"
+version: 1.0.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/holyspots_app_icon.png
